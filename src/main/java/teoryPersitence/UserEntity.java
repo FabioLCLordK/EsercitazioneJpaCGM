@@ -27,7 +27,7 @@ CREATE TABLE users(
 //e ogni oggetto della classe Entity deve essere serializzabile
 
 @Entity
-@Table(name = "Users2")
+@Table(name = "UsersJPC")
 public class UserEntity implements Serializable{
     //annotazioni tipo di dato
     @Id //corrisponde a crare la primarykey id
@@ -63,6 +63,15 @@ public class UserEntity implements Serializable{
         this.lastname = lastname;
         this.age = age;
         this.birthdate = birthdate;
+    }
+
+    public UserEntity(String firstname, String lastname, Integer age, LocalDate birthdate, String description, byte[] picture) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.birthdate = birthdate;
+        this.description = description;
+        this.picture = picture;
     }
     
     
