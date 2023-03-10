@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /*vorrei fare una tabella più simile possibile a questa
@@ -46,6 +47,16 @@ public class UserEntity implements Serializable{
     private LocalDate birthdate;
     public UserEntity(){       
     }
+    
+    //creo non delle colonne dove i dati non vengono salvati nelle 
+    //colonne della tabe, ma in degli oggetti collegati
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String description;
+    
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte [] picture;
 
     public UserEntity(String firstname, String lastname, Integer age, LocalDate birthdate) {
         this.firstname = firstname;
