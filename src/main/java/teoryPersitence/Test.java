@@ -1,5 +1,12 @@
 package teoryPersitence;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZonedDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -16,14 +23,30 @@ public class Test {
         EntityManager  entityManager= factory.createEntityManager();       
         EntityTransaction transaction= entityManager.getTransaction();
         
-        transaction.begin();
-            
+        //cancello la tabella così da ricrearla pulita
+        //("DROP TABLE UseEntity");
         
-        //operazioni da inviare
-        //operazione 1
-        //operazione 2
-        //operazione 3
+        
+            
+       try{ 
+//           transaction.begin();
+//           UserEntity eric= new UserEntity( "Eric", "Cartman", 10);
+//           
+           transaction.begin();
+           UserEntity eric= new UserEntity( "Eric", "Cartman", 10,LocalDate.of(2013, Month.DECEMBER, 28));
+           UserEntity mario= new UserEntity( "Mario", "Mario", 34,LocalDate.of(1988, Month.JULY, 7));
+           // con questo SALVO il mio record creato rendendolo permanente
+           entityManager.persist(eric);     
+           entityManager.persist(mario); 
+             
+       
         transaction.commit();
+       }catch(Exception e ){
+           System.out.println(e.getMessage());
+           transaction.rollback();
+       }
+        
+        
         entityManager.clear();
         
         factory.close();

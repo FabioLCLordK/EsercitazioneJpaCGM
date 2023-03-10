@@ -18,6 +18,7 @@
 
             <!-- vendor (Hibernate) configuration -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            <!-- SE avessi voluto invece di updatare, ricreare tutto da capo al posto di "update", metto "create"-->
             <property name="hibernate.hbm2ddl.auto" value="update" />
             
             <property name="hibernate.show_sql" value="true" />
