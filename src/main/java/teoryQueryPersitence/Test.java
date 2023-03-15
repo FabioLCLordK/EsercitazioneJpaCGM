@@ -1,10 +1,13 @@
-package teoryPersitence;
+package teoryQueryPersitence;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -18,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import net.bytebuddy.description.ModifierReviewable;
 
 public class Test {
     public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -33,7 +37,7 @@ public class Test {
         //cancello la tabella così da ricrearla pulita
         //("DROP TABLE UseEntity");
         
-        //creo lo stream del mio file
+        //creo lo stream del mio file immagine
         File path = new File("C:\\Users\\setti\\Downloads\\CittaEsfondi\\");
         File img= new File(path,"VanGogh.jpg");
         byte[] imgArray= new byte[(int) img.length()];
@@ -47,7 +51,21 @@ public class Test {
                  }
            
         inputStream.close();
+        
+        //creo lo stream del mio file testo
+        String testo="";
+        File description= new File(path, "testo.txt");
+        if (description.exists()){
+            int descriptionSize= (int) description.length();
+            char[] descriptionArray= new char[descriptionSize];
             
+            Reader reader = new BufferedReader(new FileReader(description));
+            reader.read(descriptionArray);
+            reader.close();
+            String t= new String(descriptionArray);
+            testo= t;
+        }
+        
        try{ 
 
         
@@ -55,8 +73,10 @@ public class Test {
            transaction.begin();
            UserEntity eric= new UserEntity( "Eric", "Cartman", 10,LocalDate.of(2013, Month.DECEMBER, 28));
            UserEntity mario= new UserEntity( "Mario", "Mario", 34,LocalDate.of(1978, Month.MARCH, 10));
-           UserEntity fabio= new UserEntity( "Fabio", "Fabiii", 34,LocalDate.of(1988, Month.JULY, 10),"Il creatore del database",imgArray);
-
+           UserEntity fabio= new UserEntity( "Fabio", "Fabiii", 34,LocalDate.of(1988, Month.JULY, 10),testo,imgArray);
+           
+           
+           
            // con questo SALVO il mio record creato rendendolo permanente
            entityManager.persist(eric);     
            entityManager.persist(mario); 

@@ -1,4 +1,4 @@
-package teoryPersitence;
+package teoryQueryPersitence;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /*vorrei fare una tabella più simile possibile a questa
 
@@ -26,9 +29,14 @@ CREATE TABLE users(
 //l'annotazione Entity fa si che a questa classe corrisponda una tabella,
 //e ogni oggetto della classe Entity deve essere serializzabile
 
-@Entity
-@Table(name = "UsersJPC")
-public class UserEntity implements Serializable{
+@Entity 
+@Table(name = "UsersJPCdue", uniqueConstraints = @UniqueConstraint(name = "uk_firstname", columnNames = "firstname")) 
+@NamedQueries({ 
+    @NamedQuery(name = "UserEntity.findAllByLastname", query = "SELECT u FROM UserEntity u WHERE u.lastname = :lastname"),
+    @NamedQuery(name = "UserEntity.findAllByFirstnameAndLastname", query = "SELECT u FROM UserEntity u WHERE u.firstname = :firstname AND u.lastname = :lastname"),
+    @NamedQuery(name = "UserEntity.findAllByLastnameLike", query = "SELECT u FROM UserEntity u WHERE u.lastname LIKE CONCAT('%', :endingLastname)")
+})
+public class UserEntity2 implements Serializable{
     //annotazioni tipo di dato
     @Id //corrisponde a crare la primarykey id
     @GeneratedValue(strategy= GenerationType.IDENTITY) //praticamente auto_increment
@@ -45,7 +53,7 @@ public class UserEntity implements Serializable{
 
     @Column(name = "BirthDate", columnDefinition = "Date")
     private LocalDate birthdate;
-    public UserEntity(){       
+    public UserEntity2(){       
     }
     
     //creo non delle colonne dove i dati non vengono salvati nelle 
@@ -58,14 +66,14 @@ public class UserEntity implements Serializable{
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte [] picture;
 
-    public UserEntity(String firstname, String lastname, Integer age, LocalDate birthdate) {
+    public UserEntity2(String firstname, String lastname, Integer age, LocalDate birthdate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
         this.birthdate = birthdate;
     }
 
-    public UserEntity(String firstname, String lastname, Integer age, LocalDate birthdate, String description, byte[] picture) {
+    public UserEntity2(String firstname, String lastname, Integer age, LocalDate birthdate, String description, byte[] picture) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -75,12 +83,21 @@ public class UserEntity implements Serializable{
     }
     
     
-    public UserEntity(String firstname, String lastname, Integer age) {
+    public UserEntity2(String firstname, String lastname, Integer age) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -111,6 +128,11 @@ public class UserEntity implements Serializable{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", age=" + age + ", birthdate=" + birthdate + ", description=" + description + ", picture=" + picture + '}';
     }
     
     

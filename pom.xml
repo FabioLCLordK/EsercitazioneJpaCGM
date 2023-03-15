@@ -10,6 +10,8 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <exec.mainClass>flc.jdbc_project.JDBC_project</exec.mainClass>
+        
+        <property name="hibernate.id.disable_delayed_identity_inserts" value="true" />
     </properties>
    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
    <dependencies>
