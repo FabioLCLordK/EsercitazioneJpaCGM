@@ -30,7 +30,7 @@ CREATE TABLE users(
 //e ogni oggetto della classe Entity deve essere serializzabile
 
 @Entity 
-@Table(name = "UsersJPCdue", uniqueConstraints = @UniqueConstraint(name = "uk_firstname", columnNames = "firstname")) 
+@Table(name = "UsersJPCprova2") // uniqueConstraints = @UniqueConstraint(name = "uk_firstname", columnNames = "firstname")) 
 @NamedQueries({ 
     @NamedQuery(name = "UserEntity.findAllByLastname", query = "SELECT u FROM UserEntity u WHERE u.lastname = :lastname"),
     @NamedQuery(name = "UserEntity.findAllByFirstnameAndLastname", query = "SELECT u FROM UserEntity u WHERE u.firstname = :firstname AND u.lastname = :lastname"),
