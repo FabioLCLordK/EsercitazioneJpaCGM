@@ -7,6 +7,7 @@ package teoryManyToOne;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class StateEntity implements Serializable {
     private String name;
 
     
-    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<CityEntity> cities;
     
     
